@@ -1,0 +1,15 @@
+{
+  "name": "downloader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "spot.js",
+  "dependencies": {
+    "puppeteer": "^1.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
