@@ -15,7 +15,7 @@ Args will be put into a list file based on the current day
 ```
 ./dl.sh [path to list]
 ```
-Music files will be placed in './dl/music-[list-file-name]/album-name/...'.
+Music files will be placed in `./dl/music-[list-file-name]/album-name/...`.
 
 
 
