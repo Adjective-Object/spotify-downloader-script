@@ -26,7 +26,7 @@ echo $'\e[34m'"downloading lists to"$'\e[0m' $ALBUM_FOLDER
 mkdir -p $ALBUM_FOLDER
 for album_url in $(echo $ALBUM_LIST_TEXT); do
   echo -n $'\e[34m'"listing album\e[0m" $album_url $'\e[34m'.. $'\e[0m'
-  CREATED_LIST_FILE=$(eval "$SPOTDL -b $album_url" 2>&1 | grep -o '[^ ]*\.txt')
+  CREATED_LIST_FILE=$(eval "$SPOTDL -b '$album_url'" 2>&1 | grep -o '[^ ]*\.txt')
   mv $CREATED_LIST_FILE $ALBUM_FOLDER
   CREATED_LIST_FILE="$ALBUM_FOLDER/$CREATED_LIST_FILE"
   echo $'\e[34m'"created at"$'\e[0m' "$CREATED_LIST_FILE"
@@ -40,7 +40,7 @@ for ((i=1;i<=${#LIST_FILES[@]};++i)); do
   album_url="${LIST_URLS[i]}"
   ALBUM_SONG_FOLDER=$MUSIC_FOLDER/$(basename ${album_list%.txt})
   echo $'\e[34m'"downloading songs from list"$'\e[0m' $album_list $'\e[34m'"to"$'\e[0m' $ALBUM_SONG_FOLDER
-  eval "$SPOTDL -l $album_list -f $ALBUM_SONG_FOLDER --overwrite=skip"
+  eval "$SPOTDL -l '$album_list' -f '$ALBUM_SONG_FOLDER' --overwrite=skip"
   # when the download is complete, remove the current song from the album list file
   TEXT=`cat $ALBUM_LIST_FILE | sed "s@$album_url@# $album_url@"`;
   echo $TEXT > "$ALBUM_LIST_FILE";

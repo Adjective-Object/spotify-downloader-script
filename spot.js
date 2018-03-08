@@ -32,8 +32,9 @@ async function getSpotifyDownloadLinksFromSearchArgs(page, searchArgs) {
   });
 }
 
+let formatMatch = (text) => text.match(/(.*) by (.*) on Spotify/);
 const formatLinkText = text => {
-  let match = text.match(/(.*) by (.*) on Spotify/);
+  let match = formatMatch(text);
   if (match) {
     return match[2] + " - " + match[1];
   }
@@ -52,8 +53,14 @@ const main = async () => {
     searchArgs = await getSearchArgsFromItunesUrl(page, searchArgs[0]);
   }
 
-  const albumLinks = await getSpotifyDownloadLinksFromSearchArgs(page, searchArgs);
-  albumLinks.map(link => console.log(`${link.a} # ${formatLinkText(link.text)}`));
+  const albumLinks = await getSpotifyDownloadLinksFromSearchArgs(page, searchArgs)
+  albumLinks
+    .sort((a, b) =>
+      (formatMatch(b.text) !== null) | 0 -
+      (formatMatch(a.text) !== null) | 0
+    )
+    .filter((value, i, self) => !self.slice(-1, i).some(a => a.a === value.a))
+    .map(link => console.log(`${link.a} # ${formatLinkText(link.text)}`));
   await browser.close();
 };
 
